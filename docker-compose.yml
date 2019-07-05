@@ -51,7 +51,7 @@ services:
             - 'prometheus:prometheus'
         volumes:
             - ./docker/grafana/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
-            - ./docker/grafana/docker-monitoring.json:/etc/grafana/provisioning/dashboards/docker-monitoring.json
+            - ./docker/grafana/dashboards/:/etc/grafana/provisioning/dashboards/
             - grafana_data:/var/lib/grafana
         env_file:
             - ./docker/grafana/config.env

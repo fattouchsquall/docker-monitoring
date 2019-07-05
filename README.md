@@ -44,6 +44,8 @@ Prometheus is used to define alerting rules under `docker/prometheus`, 3 Alert R
 
 To view Prometheus alerts, go to <http://<Host IP>:9006>/alerts
 
+For more informations, click [here][7]
+
 ## Alerting
 
 AlertManager is configured to report alerts under Slack, the configuration is available under: `docker/alertmanager/config.yml`
@@ -52,12 +54,16 @@ Custom integration with Slack has been added (https://api.slack.com/incoming-web
 
 To view AlertManager, you can go to <http://<Host IP>:9008>
 
+For more informations, click [here][6]
+
 ## Dashboard
 
 Grafana dashboad is ais the responsible of dashboard displaying:
 
 - The configured datasources is provisioned from `docker/grafana/datasource.yaml`, its configured to communicate with prometheus datasource.
-- The defined dashboard is defined under `docker/grafana/docker-monitoring.json`, it was imported from [here][4].
+- The defined dashboard is defined under `docker/grafana/dashboards`, it was imported from [here][4].
+
+For more informations, click [here][5]
 
 License
 -------
@@ -77,3 +83,6 @@ Contributors
 [2]: https://github.com/prometheus/alertmanager
 [3]: https://github.com/grafana/grafana
 [4]: https://grafana.com/dashboards/193
+[5]: https://grafana.com/docs/administration/provisioning/
+[6]: https://prometheus.io/docs/alerting/configuration/
+[7]: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
