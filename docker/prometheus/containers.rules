@@ -1,0 +1,12 @@
+groups:
+- name: containers
+  rules:
+    # Alert for any container that is unreachable for > 30 seconds.
+    - alert: container_down
+      expr: absent(container_memory_usage_bytes{name="jenkins"})
+      for: 30s
+      labels:
+        severity: page
+      annotations:
+        summary: "Container {{ $labels.name }} down"
+        description: "{{ $labels.name }} container has been down for more than 30 seconds."

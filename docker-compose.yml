@@ -1,0 +1,85 @@
+version: '3.5'
+
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
+    
+services:
+    cadvisor:
+        image: google/cadvisor
+        container_name: cadvisor
+        restart: always
+        volumes:
+            - /:/rootfs:ro
+            - /var/run:/var/run:rw
+            - /sys:/sys:ro
+            - /var/lib/docker/:/var/lib/docker:ro
+        expose:
+            - 8080
+        ports:
+            - "9005:8080"
+        networks:
+            - monitoring
+    prometheus:
+        image: prom/prometheus
+        container_name: prometheus
+        restart: always
+        links:
+            - 'cadvisor:cadvisor'
+        volumes:
+            - ./docker/prometheus/:/etc/prometheus/
+            - prometheus_data:/prometheus
+        command:
+            - '--config.file=/etc/prometheus/prometheus.yaml'
+            - '--storage.tsdb.path=/prometheus'
+            - '--web.console.libraries=/etc/prometheus/console_libraries'
+            - '--web.console.templates=/etc/prometheus/consoles'
+            - '--storage.tsdb.retention=200h'
+        expose:
+              - 9090
+        ports:
+              - "9006:9090"
+        depends_on:
+            - cadvisor
+        networks:
+            - monitoring
+    grafana:
+        image: grafana/grafana
+        restart: always
+        container_name: grafana
+        links:
+            - 'prometheus:prometheus'
+        volumes:
+            - ./docker/grafana/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+            - ./docker/grafana/docker-monitoring.json:/etc/grafana/provisioning/dashboards/docker-monitoring.json
+            - grafana_data:/var/lib/grafana
+        env_file:
+            - ./docker/grafana/config.env
+        expose:
+            - 3000
+        ports:
+            - "9007:3000"
+        networks:
+            - monitoring
+        depends_on:
+            - prometheus
+    alertmanager:
+        image: prom/alertmanager
+        container_name: alertmanager
+        restart: always
+        ports:
+            - 9008:9093
+        volumes:
+            - ./docker/alertmanager/:/etc/alertmanager/
+        networks:
+            - monitoring
+        depends_on:
+            - prometheus
+        command:
+            - '--config.file=/etc/alertmanager/config.yml'
+            - '--storage.path=/alertmanager'
+            
+networks:
+    monitoring:
+        name: monitoring
+        driver: bridge

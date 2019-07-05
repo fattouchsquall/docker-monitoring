@@ -1,0 +1,8 @@
+route:
+    receiver: 'slack'
+  
+receivers:
+- name: 'slack'
+  slack_configs:
+  - channel: '#lab_uat_monitoring'
+    api_url: 'https://hooks.slack.com/services/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'
