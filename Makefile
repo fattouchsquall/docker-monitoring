@@ -39,5 +39,5 @@ docker-bash: ## Login to docker instance
 docker-inspect: ## Inspect the applicatif docker container
 	@docker inspect $(APPLICATION_NAME)
 
-docker-exec: ## Execute any other make task on docker (make docker-exec TASK=test to use it), you can specify the APPLICATION_NAME=cadvisor
+docker-exec: ## Execute any other make task on docker (make docker-exec TASK=test to use it), you can specify the APPLICATION_NAME=cadvisor)
 	@$(DOCKER_COMPOSE_EXEC) $(MAKE) $(TASK)
