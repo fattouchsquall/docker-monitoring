@@ -42,7 +42,7 @@ Prometheus is used to define alerting rules under `docker/prometheus`, 3 Alert R
 - `docker/prometheus/host.rules`: Reports high memory and cpu load
 - `docker/prometheus/targets.rules`: Reports down monitor's service
 
-To view Prometheus alerts, go to <http://<Host IP>:9006>/alerts
+To view Prometheus alerts, go to <http://<Host_IP>:9006>/alerts
 
 For more informations, click [here][7]
 
@@ -52,7 +52,7 @@ AlertManager is configured to report alerts under Slack, the configuration is av
 
 Custom integration with Slack has been added (https://api.slack.com/incoming-webhooks) that points to default channel #lab_uat_monitoring
 
-To view AlertManager, you can go to <http://<Host IP>:9008>
+To view AlertManager, you can go to <http://<Host_IP>:9008>
 
 For more informations, click [here][6]
 
